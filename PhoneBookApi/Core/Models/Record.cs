@@ -13,7 +13,8 @@ namespace PhoneBookApi.Core.Models
     {
         public int Id { get; set; }
 
-        [Required]
+        public int TitleId { get; set; }
+
         public Title Title { get; set; }
 
         [Required]

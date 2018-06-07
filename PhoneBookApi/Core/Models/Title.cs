@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace PhoneBookApi.Core.Models
 {
-    [Table("Records")]
+    [Table("Titles")]
     public class Title
     {
         public int Id { get; set; }
