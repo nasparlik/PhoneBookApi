@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace PhoneBookApi.Controllers
 {
     [Route("api/[controller]")]
-    public class ValuesController : Controller
+    public class PhoneBookController : Controller
     {
         // GET api/values
         [HttpGet]
