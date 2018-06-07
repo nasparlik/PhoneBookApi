@@ -23,9 +23,9 @@ namespace PhoneBookApi.Persistence
                 .Include(t => t.Title).ToListAsync();
         }
 
-        public void Add(Record phoneBook)
+        public void Add(Record record)
         {
-            throw new NotImplementedException();
+            context.Record.Add(record);
         }
 
        

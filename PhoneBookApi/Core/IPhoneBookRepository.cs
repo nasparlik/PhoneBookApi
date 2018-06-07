@@ -10,9 +10,9 @@ namespace PhoneBookApi.Core
     {
         Task<IEnumerable<Record>> GetPhoneBookRecordsAsync();
 
-        void Add(Record phoneBook);
+        void Add(Record record);
 
-        void Update(Record phoneBook);
+        void Update(Record record);
 
         void Remove(int id);
     }

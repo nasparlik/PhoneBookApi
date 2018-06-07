@@ -7,6 +7,8 @@ namespace PhoneBookApi.Controllers.Resources
 {
     public class TitleResource
     {
+        public int Id { get; set; }
+
         public string Text { get; set; }
     }
 }

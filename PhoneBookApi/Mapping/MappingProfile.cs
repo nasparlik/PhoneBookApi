@@ -15,6 +15,12 @@ namespace PhoneBookApi.Mapping
             //Domain to API Resources
             CreateMap<Record, RecordResource>();
 
+
+            //API Resource to Domain
+            CreateMap<SaveRecordResource, Record>()
+                .ForMember(r => r.Id, opt => opt.Ignore())
+                .ForMember(r => r.TitleId, opt => opt.MapFrom(rr => rr.TitleId));
+                
         }
     }
 }

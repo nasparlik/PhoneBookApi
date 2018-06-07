@@ -30,6 +30,7 @@ namespace PhoneBookApi
             services.AddMvc();
             services.AddDbContext<PhoneBookDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("Default")));
             services.AddScoped<IPhoneBookRepository, PhoneBookRepository>();
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddAutoMapper();
 
         }

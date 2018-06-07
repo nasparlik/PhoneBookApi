@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using PhoneBookApi.Controllers.Resources;
 using PhoneBookApi.Core;
 using PhoneBookApi.Core.Models;
+using PhoneBookApi.Persistence;
 
 namespace PhoneBookApi.Controllers
 {
@@ -15,11 +16,14 @@ namespace PhoneBookApi.Controllers
     {
         private readonly IPhoneBookRepository repository;
         private readonly IMapper mapper;
+        private readonly IUnitOfWork unitOfWork;
 
-        public PhoneBookController(IPhoneBookRepository repository, IMapper mapper)
+        public PhoneBookController(IPhoneBookRepository repository, IMapper mapper,
+            IUnitOfWork unitOfWork)
         {
             this.repository = repository;
             this.mapper = mapper;
+            this.unitOfWork = unitOfWork;
         }
 
         // GET api/values
@@ -31,6 +35,20 @@ namespace PhoneBookApi.Controllers
             return mapper.Map<IEnumerable<Record>, IEnumerable<RecordResource>>(records);
         }
 
-      
+        [HttpPost]
+        public async Task<IActionResult> CreateRecord([FromBody] SaveRecordResource recordResource)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            var record = mapper.Map<SaveRecordResource, Record>(recordResource);
+            record.LastUpdate = DateTime.Now;
+
+            repository.Add(record);
+
+            await unitOfWork.CompleteAsync();
+            
+            return Ok();
+        }
     }
 }
