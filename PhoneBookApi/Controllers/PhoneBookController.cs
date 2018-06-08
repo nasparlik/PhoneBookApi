@@ -36,12 +36,12 @@ namespace PhoneBookApi.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateRecord([FromBody] SaveRecordResource recordResource)
+        public async Task<IActionResult> CreateRecord([FromBody] SaveRecordResource saveRecordResource)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
-            var record = mapper.Map<SaveRecordResource, Record>(recordResource);
+            var record = mapper.Map<SaveRecordResource, Record>(saveRecordResource);
             record.LastUpdate = DateTime.Now;
 
             repository.Add(record);
@@ -49,6 +49,56 @@ namespace PhoneBookApi.Controllers
             await unitOfWork.CompleteAsync();
             
             return Ok();
+        }
+
+        [HttpPut("{id}")]
+        public async Task<IActionResult> UpdateRecord(int id, [FromBody] SaveRecordResource saveRecordResource)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            var record = await repository.GetRecord(id);
+
+            if (record == null)
+                return NotFound();
+
+             mapper.Map<SaveRecordResource, Record>(saveRecordResource, record);
+            record.LastUpdate = DateTime.Now;
+
+            await unitOfWork.CompleteAsync();
+
+            record = await repository.GetRecord(record.Id);
+            var result = mapper.Map<Record, RecordResource>(record);
+
+            return Ok(result);
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteRecord(int id)
+        {
+            var record = await repository.GetRecord(id);
+
+            if (record == null)
+                return NotFound();
+
+            repository.Remove(record);
+
+            await unitOfWork.CompleteAsync();
+
+            return Ok();
+        }
+
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetRecord(int id)
+        {
+            var record = await repository.GetRecord(id);
+
+            if (record == null)
+                return NotFound();
+
+            var recordResource = mapper.Map<Record, RecordResource>(record);
+
+            return Ok(recordResource);
         }
     }
 }

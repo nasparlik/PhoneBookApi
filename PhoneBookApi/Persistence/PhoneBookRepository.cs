@@ -23,21 +23,22 @@ namespace PhoneBookApi.Persistence
                 .Include(t => t.Title).ToListAsync();
         }
 
+        public async Task<Record> GetRecord(int id)
+        {
+            return await context.Record
+                            .Include(t => t.Title)
+                      .SingleOrDefaultAsync(re => re.Id == id);
+        }
+
         public void Add(Record record)
         {
             context.Record.Add(record);
         }
 
+        public void Remove(Record record)
+        {
+            context.Remove(record);
+        }
        
-
-        public void Remove(int id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void Update(Record phoneBook)
-        {
-            throw new NotImplementedException();
-        }
     }
 }
