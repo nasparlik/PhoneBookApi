@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using PhoneBookApi.Controllers.Resources;
 using PhoneBookApi.Core;
@@ -23,6 +24,7 @@ namespace PhoneBookApi.Controllers
         }
 
         [HttpGet]
+        [Authorize]
         public async Task<IEnumerable<TitleResource>> Get()
         {
             var titles = await repository.GetTitlesAsync();

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using PhoneBookApi.Controllers.Resources;
 using PhoneBookApi.Core;
@@ -36,6 +37,7 @@ namespace PhoneBookApi.Controllers
         }
 
         [HttpPost]
+        [Authorize]
         public async Task<IActionResult> CreateRecord([FromBody] SaveRecordResource saveRecordResource)
         {
             if (!ModelState.IsValid)
@@ -52,6 +54,7 @@ namespace PhoneBookApi.Controllers
         }
 
         [HttpPut("{id}")]
+        [Authorize]
         public async Task<IActionResult> UpdateRecord(int id, [FromBody] SaveRecordResource saveRecordResource)
         {
             if (!ModelState.IsValid)
@@ -74,6 +77,7 @@ namespace PhoneBookApi.Controllers
         }
 
         [HttpDelete("{id}")]
+        [Authorize]
         public async Task<IActionResult> DeleteRecord(int id)
         {
             var record = await repository.GetRecord(id);
