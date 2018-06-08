@@ -39,6 +39,10 @@ namespace PhoneBookApi.Persistence
         {
             context.Remove(record);
         }
-       
+
+       public async Task<IEnumerable<Title>> GetTitlesAsync()
+        {
+            return await context.Title.ToListAsync();
+        }
     }
 }

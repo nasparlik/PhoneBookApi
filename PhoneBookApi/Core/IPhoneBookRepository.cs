@@ -15,5 +15,7 @@ namespace PhoneBookApi.Core
         void Add(Record record);
 
         void Remove(Record record);
+
+        Task<IEnumerable<Title>> GetTitlesAsync();
     }
 }

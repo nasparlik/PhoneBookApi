@@ -11,6 +11,8 @@ namespace PhoneBookApi.Persistence
     {
         public DbSet<Record> Record { get; set; }
 
+        public DbSet<Title> Title { get; set; }
+
         public PhoneBookDbContext(DbContextOptions<PhoneBookDbContext> options) : base(options) { }
 
     }

@@ -1,10 +1,6 @@
 ﻿using AutoMapper;
 using PhoneBookApi.Controllers.Resources;
 using PhoneBookApi.Core.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace PhoneBookApi.Mapping
 {
@@ -13,7 +9,9 @@ namespace PhoneBookApi.Mapping
         public MappingProfile()
         {
             //Domain to API Resources
-            CreateMap<Record, RecordResource>();
+            CreateMap<Record, RecordResource>()
+                .ForMember(re => re.Title, opt => opt.MapFrom(t => t.Title.Text));
+            CreateMap<Title, TitleResource>();
 
 
             //API Resource to Domain
